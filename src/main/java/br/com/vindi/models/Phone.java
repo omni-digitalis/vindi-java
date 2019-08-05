@@ -1,9 +1,12 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public final class Phone {
 
     private Long id;
 
+    @SerializedName("phone_type")
     private String phoneType;
 
     private String number;

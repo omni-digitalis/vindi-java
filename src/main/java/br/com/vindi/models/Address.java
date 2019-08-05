@@ -1,11 +1,14 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public final class Address {
 
     private String street;
 
     private Integer number;
 
+    @SerializedName("additional_details")
     private String additionalDetails;
 
     private String zipcode;

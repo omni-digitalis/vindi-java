@@ -1,5 +1,7 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public final class Client {
 
     private String email;
 
+    @SerializedName("registry_code")
     private String registryCode;
 
     private String code;
@@ -19,8 +22,10 @@ public final class Client {
 
     private String status;
 
+    @SerializedName("created_at")
     private LocalDateTime createdAt;
 
+    @SerializedName("updated_at")
     private LocalDateTime updatedAt;
 
     private String metadata;
