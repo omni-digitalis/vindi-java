@@ -1,7 +1,7 @@
 out/
 build/
 
-vindi-java/src/main/java/br/com/vindi/MainForTests
+src/main/java/br/com/vindi/MainForTests.java
 
 # Compiled class file
 *.class
