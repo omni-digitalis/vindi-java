@@ -62,8 +62,8 @@ public final class Client {
         return registryCode;
     }
 
-    public void setRegistryCode(String registryCode) {
-        this.registryCode = registryCode;
+    public void setRegistryCode(RegistryCode registryCode) {
+        this.registryCode = registryCode.string();
     }
 
     public String getCode() {
@@ -86,8 +86,8 @@ public final class Client {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(ClientStatus status) {
+        this.status = status.string();
     }
 
     public LocalDateTime getCreatedAt() {

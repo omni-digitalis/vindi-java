@@ -25,8 +25,8 @@ public final class Phone {
         return phoneType;
     }
 
-    public void setPhoneType(String phoneType) {
-        this.phoneType = phoneType;
+    public void setPhoneType(PhoneType phoneType) {
+        this.phoneType = phoneType.string();
     }
 
     public String getNumber() {
