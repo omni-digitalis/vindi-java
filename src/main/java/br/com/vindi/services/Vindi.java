@@ -7,6 +7,7 @@ import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * The main communication class, it tries to initialize the VindiConfig
@@ -52,6 +53,7 @@ public final class Vindi {
 
         var retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(VindiConfig.getApiUrl())
                 .build();
 

@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 
 public interface ClientService {
 
-    @POST("/customers")
+    @POST("customers")
     Call<Client> createClient(@Body Client client)throws Exception;
 
 }
