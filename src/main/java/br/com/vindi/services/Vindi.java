@@ -38,13 +38,14 @@ public final class Vindi {
     }
 
     private void setup() {
-        final var credentials = Credentials.basic(VindiConfig.getApiUser(), VindiConfig.getPrivKey());
+        final var credentials = Credentials.basic(VindiConfig.getPrivKey(), null);
 
         final var okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     final var authRequest = chain.request()
                             .newBuilder()
-                            .addHeader("Authorization", credentials)
+                            .addHeader("Content-Type", "application/json")
+                            .addHeader("Authorization", credentials + ":")
                             .build();
 
                     return chain.proceed(authRequest);
