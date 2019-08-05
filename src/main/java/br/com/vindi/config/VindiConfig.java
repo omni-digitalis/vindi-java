@@ -12,6 +12,7 @@ public final class VindiConfig {
 
     private static final String PRIVATE_KEY_ENV = "VINDI_PRIVATE_KEY";
     private static final String PROPERTIES = "application.properties";
+    private static final String apiUser = "API_KEY";
     private static String privateKey;
     private static String apiUrl;
 
@@ -42,6 +43,13 @@ public final class VindiConfig {
      */
     public static String getPrivKey() {
         return privateKey;
+    }
+
+    /**
+     * @return Vindi api basic auth standard user
+     */
+    public static String getApiUser() {
+        return apiUser;
     }
 
     /**
