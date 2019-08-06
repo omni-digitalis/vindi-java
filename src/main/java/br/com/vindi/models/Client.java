@@ -86,7 +86,7 @@ public final class Client {
         return status;
     }
 
-    public void setStatus(ClientStatus status) {
+    public void setStatus(Status status) {
         this.status = status.string();
     }
 

@@ -3,6 +3,7 @@ package br.com.vindi.services;
 import br.com.vindi.config.VindiConfig;
 import br.com.vindi.exceptions.RequestFailedException;
 import br.com.vindi.models.Client;
+import br.com.vindi.models.PaymentProfile;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -15,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class Vindi {
 
     private ClientService clientService;
+    private PaymentProfileService paymentProfileService;
 
     public Vindi(String privateKey) throws Exception {
         VindiConfig.init(privateKey);
@@ -32,6 +34,17 @@ public final class Vindi {
         var response = request.execute();
         if (!response.isSuccessful()) {
             throw new RequestFailedException("Create Client Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        }
+
+        return response.body();
+    }
+
+    public PaymentProfile createPaymentProfile(PaymentProfile paymentProfile) throws Exception {
+        Call<PaymentProfile> request = paymentProfileService.createPaymentProfile(paymentProfile);
+
+        var response = request.execute();
+        if (!response.isSuccessful()) {
+            throw new RequestFailedException("Create Payment Profile Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
         return response.body();
@@ -60,6 +73,7 @@ public final class Vindi {
 
         // create all necessary services
         clientService = retrofit.create(ClientService.class);
+        paymentProfileService = retrofit.create(PaymentProfileService.class);
     }
 
 }

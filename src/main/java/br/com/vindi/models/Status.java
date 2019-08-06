@@ -1,6 +1,6 @@
 package br.com.vindi.models;
 
-public enum ClientStatus {
+public enum Status {
 
     ACTIVE("active"),
     INACTIVE("inactive"),
@@ -8,7 +8,7 @@ public enum ClientStatus {
 
     private final String value;
 
-    ClientStatus(final String value) {
+    Status(final String value) {
         this.value = value;
     }
 
