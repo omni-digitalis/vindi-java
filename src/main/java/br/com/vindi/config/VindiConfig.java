@@ -11,7 +11,7 @@ import java.util.Properties;
 public final class VindiConfig {
 
     private static final String PRIVATE_KEY_ENV = "VINDI_PRIVATE_KEY";
-    private static final String PROPERTIES = "application.properties";
+    private static final String PROPERTIES = "app.properties";
     private static String privateKey;
     private static String apiUrl;
 
