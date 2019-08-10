@@ -62,8 +62,8 @@ public final class Client {
         return registryCode;
     }
 
-    public void setRegistryCode(RegistryCode registryCode) {
-        this.registryCode = registryCode.string();
+    public void setRegistryCode(String registryCode) {
+        this.registryCode = registryCode;
     }
 
     public String getCode() {
