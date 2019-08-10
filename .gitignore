@@ -1,3 +1,8 @@
+out/
+build/
+
+src/main/java/br/com/vindi/MainForTests.java
+
 # Compiled class file
 *.class
 
