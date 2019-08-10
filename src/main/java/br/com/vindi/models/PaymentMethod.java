@@ -4,6 +4,20 @@ import com.google.gson.annotations.SerializedName;
 
 public class PaymentMethod {
 
+    public enum Method {
+
+        CASH("cash"),
+        CREDIT_CARD("credit_card");
+
+        private final String value;
+        Method(final String value) {
+            this.value = value;
+        }
+        public String string() {
+            return value;
+        }
+    }
+
     private Long id;
 
     @SerializedName("public_name")

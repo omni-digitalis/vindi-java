@@ -4,6 +4,7 @@ import br.com.vindi.config.VindiConfig;
 import br.com.vindi.exceptions.RequestFailedException;
 import br.com.vindi.models.Client;
 import br.com.vindi.models.PaymentProfile;
+import br.com.vindi.models.Product;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -17,6 +18,7 @@ public final class Vindi {
 
     private ClientService clientService;
     private PaymentProfileService paymentProfileService;
+    private ProductService productService;
 
     public Vindi(String privateKey) throws Exception {
         VindiConfig.init(privateKey);
@@ -50,6 +52,17 @@ public final class Vindi {
         return response.body();
     }
 
+    public Product createProduct(Product product) throws Exception {
+        Call<Product> request = productService.createProduct(product);
+
+        var response = request.execute();
+        if (!response.isSuccessful()) {
+            throw new RequestFailedException("Create Product Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        }
+
+        return response.body();
+    }
+
     private void setup() {
         final var credentials = Credentials.basic(VindiConfig.getPrivKey(), null);
 
@@ -74,6 +87,8 @@ public final class Vindi {
         // create all necessary services
         clientService = retrofit.create(ClientService.class);
         paymentProfileService = retrofit.create(PaymentProfileService.class);
+        productService = retrofit.create(ProductService.class);
     }
+
 
 }

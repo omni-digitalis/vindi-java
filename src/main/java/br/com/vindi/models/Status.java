@@ -16,4 +16,13 @@ public enum Status {
         return value;
     }
 
+    public static Status enumValue(String value) {
+        for (Status status : Status.values()) {
+            if (status.string().equals(value.replace(" ", "").replace("\n", ""))) {
+                return status;
+            }
+        }
+        return null;
+    }
+
 }
