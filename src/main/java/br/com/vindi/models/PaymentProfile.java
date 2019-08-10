@@ -48,6 +48,9 @@ public final class PaymentProfile {
     @SerializedName("payment_method")
     private PaymentMethod paymentMethod;
 
+    @SerializedName("customer_id")
+    private Integer customerId;
+
     private Client customer;
 
     public Long getId() {
@@ -184,5 +187,37 @@ public final class PaymentProfile {
 
     public void setCustomer(Client customer) {
         this.customer = customer;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentProfile{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                ", holderName='" + holderName + '\'' +
+                ", registryCode='" + registryCode + '\'' +
+                ", bankBranch='" + bankBranch + '\'' +
+                ", bankAccount='" + bankAccount + '\'' +
+                ", cardExpiration='" + cardExpiration + '\'' +
+                ", cardNumberFixSix='" + cardNumberFixSix + '\'' +
+                ", cardNumberLastFour='" + cardNumberLastFour + '\'' +
+                ", token='" + token + '\'' +
+                ", gatewayToken='" + gatewayToken + '\'' +
+                ", type='" + type + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", paymentCompany=" + paymentCompany +
+                ", paymentMethod=" + paymentMethod +
+                ", customerId=" + customerId +
+                ", customer=" + customer +
+                '}';
     }
 }

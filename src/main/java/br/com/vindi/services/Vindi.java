@@ -20,8 +20,8 @@ public final class Vindi {
     private PaymentProfileService paymentProfileService;
     private ProductService productService;
 
-    public Vindi(String privateKey) throws Exception {
-        VindiConfig.init(privateKey);
+    public Vindi(String privateKey, String publicKey) throws Exception {
+        VindiConfig.init(privateKey, publicKey);
         setup();
     }
 
@@ -29,6 +29,7 @@ public final class Vindi {
         VindiConfig.init();
         setup();
     }
+
 
     public Client createClient(Client client) throws Exception {
         Call<Client> request = clientService.createClient(client);

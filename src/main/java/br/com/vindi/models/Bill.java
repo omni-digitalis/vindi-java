@@ -1,11 +1,25 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public final class Bill {
 
     private String id;
-    private String code;
-    private Product product;
 
+    private String code;
+
+    @SerializedName("bill_items")
+    private Items billItems;
+
+    @SerializedName("payment_method_code")
+    private String paymentMethodCode;
+
+    @SerializedName("customer_id")
+    private String customerId;
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return id;
@@ -19,11 +33,11 @@ public final class Bill {
         this.code = code;
     }
 
-    public Product getProduct() {
-        return product;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 }

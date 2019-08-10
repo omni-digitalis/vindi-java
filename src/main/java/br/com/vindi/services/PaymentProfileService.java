@@ -7,7 +7,7 @@ import retrofit2.http.POST;
 
 public interface PaymentProfileService {
 
-    @POST
+    @POST("payment_profiles")
     Call<PaymentProfile> createPaymentProfile(@Body PaymentProfile paymentProfile);
 
 }
