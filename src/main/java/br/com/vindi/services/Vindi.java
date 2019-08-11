@@ -2,7 +2,7 @@ package br.com.vindi.services;
 
 import br.com.vindi.config.VindiConfig;
 import br.com.vindi.exceptions.RequestFailedException;
-import br.com.vindi.models.Client;
+import br.com.vindi.models.Customer;
 import br.com.vindi.models.PaymentProfile;
 import br.com.vindi.models.Product;
 import okhttp3.Credentials;
@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public final class Vindi {
 
-    private ClientService clientService;
+    private CustomerService customerService;
     private PaymentProfileService paymentProfileService;
     private ProductService productService;
 
@@ -31,15 +31,15 @@ public final class Vindi {
     }
 
 
-    public Client createClient(Client client) throws Exception {
-        Call<Client> request = clientService.createClient(client);
+    public Customer createClient(Customer customer) throws Exception {
+        var request = customerService.createClient(customer);
 
         var response = request.execute();
-        if (!response.isSuccessful()) {
-            throw new RequestFailedException("Create Client Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        if (!response.isSuccessful() || response.body() == null) {
+            throw new RequestFailedException("Create Customer Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body();
+        return response.body().get(Customer.class.getSimpleName().toLowerCase());
     }
 
     public PaymentProfile createPaymentProfile(PaymentProfile paymentProfile) throws Exception {
@@ -54,14 +54,14 @@ public final class Vindi {
     }
 
     public Product createProduct(Product product) throws Exception {
-        Call<Product> request = productService.createProduct(product);
+        var request = productService.createProduct(product);
 
         var response = request.execute();
-        if (!response.isSuccessful()) {
+        if (!response.isSuccessful() || response.body() == null) {
             throw new RequestFailedException("Create Product Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body();
+        return response.body().get(Product.class.getSimpleName().toLowerCase());
     }
 
     private void setup() {
@@ -86,7 +86,7 @@ public final class Vindi {
                 .build();
 
         // create all necessary services
-        clientService = retrofit.create(ClientService.class);
+        customerService = retrofit.create(CustomerService.class);
         paymentProfileService = retrofit.create(PaymentProfileService.class);
         productService = retrofit.create(ProductService.class);
     }

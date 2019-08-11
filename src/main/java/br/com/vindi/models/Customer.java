@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public final class Client {
+public final class Customer {
 
     private Long id;
 
@@ -23,12 +23,10 @@ public final class Client {
     private String status;
 
     @SerializedName("created_at")
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     @SerializedName("updated_at")
-    private LocalDateTime updatedAt;
-
-    private String metadata;
+    private String updatedAt;
 
     private Address address;
 
@@ -90,28 +88,20 @@ public final class Client {
         this.status = status.string();
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public String getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(String metadata) {
-        this.metadata = metadata;
     }
 
     public Address getAddress() {

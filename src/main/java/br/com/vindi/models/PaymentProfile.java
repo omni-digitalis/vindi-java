@@ -51,7 +51,7 @@ public final class PaymentProfile {
     @SerializedName("customer_id")
     private Integer customerId;
 
-    private Client customer;
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -181,11 +181,11 @@ public final class PaymentProfile {
         this.paymentMethod = paymentMethod;
     }
 
-    public Client getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Client customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
