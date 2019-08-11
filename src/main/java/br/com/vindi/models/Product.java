@@ -10,6 +10,7 @@ public final class Product {
 
     private String description;
 
+    // external id
     private String code;
 
     private String status;

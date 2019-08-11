@@ -6,6 +6,7 @@ public final class Bill {
 
     private String id;
 
+    // External id
     private String code;
 
     @SerializedName("bill_items")
@@ -39,5 +40,21 @@ public final class Bill {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
+    }
+
+    public String getPaymentMethodCode() {
+        return paymentMethodCode;
+    }
+
+    public void setPaymentMethodCode(String paymentMethodCode) {
+        this.paymentMethodCode = paymentMethodCode;
+    }
+
+    public Items getBillItems() {
+        return billItems;
+    }
+
+    public void setBillItems(Items billItems) {
+        this.billItems = billItems;
     }
 }

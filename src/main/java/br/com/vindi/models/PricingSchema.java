@@ -9,8 +9,8 @@ public final class PricingSchema {
     @SerializedName("minimum_price")
     private Double minimumPrice;
 
-
-    public Double getPrice() {
+    public Double getPrice()
+    {
         return price;
     }
 
