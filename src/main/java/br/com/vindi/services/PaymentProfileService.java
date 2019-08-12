@@ -5,9 +5,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
+import java.util.Map;
+
 public interface PaymentProfileService {
 
     @POST("payment_profiles")
-    Call<PaymentProfile> createPaymentProfile(@Body PaymentProfile paymentProfile);
+    Call<Map<String, PaymentProfile>> createPaymentProfile(@Body PaymentProfile paymentProfile);
 
 }

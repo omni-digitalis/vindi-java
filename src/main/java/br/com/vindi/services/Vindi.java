@@ -8,7 +8,6 @@ import br.com.vindi.models.PaymentProfile;
 import br.com.vindi.models.Product;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -35,35 +34,38 @@ public final class Vindi {
 
     public Customer createClient(Customer customer) throws Exception {
         var request = customerService.createClient(customer);
-
         var response = request.execute();
-        if (!response.isSuccessful() || response.body() == null) {
+        var body = response.body();
+
+        if (!response.isSuccessful() || body == null) {
             throw new RequestFailedException("Create Customer Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body().get(Customer.class.getSimpleName().toLowerCase());
+        return body.get(Customer.class.getSimpleName().toLowerCase());
     }
 
     public PaymentProfile createPaymentProfile(PaymentProfile paymentProfile) throws Exception {
-        Call<PaymentProfile> request = paymentProfileService.createPaymentProfile(paymentProfile);
+        final var request = paymentProfileService.createPaymentProfile(paymentProfile);
+        final var response = request.execute();
+        final var body = response.body();
 
-        var response = request.execute();
-        if (!response.isSuccessful()) {
+        if (!response.isSuccessful() || body == null) {
             throw new RequestFailedException("Create Payment Profile Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body();
+        return body.get("payment_profile");
     }
 
     public Product createProduct(Product product) throws Exception {
-        var request = productService.createProduct(product);
+        final var request = productService.createProduct(product);
+        final var response = request.execute();
+        final var body = response.body();
 
-        var response = request.execute();
-        if (!response.isSuccessful() || response.body() == null) {
+        if (!response.isSuccessful() || body == null) {
             throw new RequestFailedException("Create Product Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body().get(Product.class.getSimpleName().toLowerCase());
+        return body.get(Product.class.getSimpleName().toLowerCase());
     }
 
     public Bill createBill(Bill bill) throws Exception {
