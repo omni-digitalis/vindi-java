@@ -29,6 +29,9 @@ public final class Bill {
     @SerializedName("seen_at")
     private String seenAt;
 
+    @SerializedName("payment_profile")
+    private PaymentProfile paymentProfile;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -91,5 +94,13 @@ public final class Bill {
 
     public void setSeenAt(String seenAt) {
         this.seenAt = seenAt;
+    }
+
+    public PaymentProfile getPaymentProfile() {
+        return paymentProfile;
+    }
+
+    public void setPaymentProfile(PaymentProfile paymentProfile) {
+        this.paymentProfile = paymentProfile;
     }
 }
