@@ -5,9 +5,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
+import java.util.Map;
+
 public interface BillService {
 
     @POST("bills")
-    Call<Bill> createBill(@Body Bill bill) throws Exception;
+    Call<Map<String, Bill>> createBill(@Body Bill bill) throws Exception;
 
 }

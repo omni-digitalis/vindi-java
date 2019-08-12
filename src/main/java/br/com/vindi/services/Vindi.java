@@ -2,6 +2,7 @@ package br.com.vindi.services;
 
 import br.com.vindi.config.VindiConfig;
 import br.com.vindi.exceptions.RequestFailedException;
+import br.com.vindi.models.Bill;
 import br.com.vindi.models.Customer;
 import br.com.vindi.models.PaymentProfile;
 import br.com.vindi.models.Product;
@@ -19,6 +20,7 @@ public final class Vindi {
     private CustomerService customerService;
     private PaymentProfileService paymentProfileService;
     private ProductService productService;
+    private BillService billService;
 
     public Vindi(String privateKey, String publicKey) throws Exception {
         VindiConfig.init(privateKey, publicKey);
@@ -64,6 +66,17 @@ public final class Vindi {
         return response.body().get(Product.class.getSimpleName().toLowerCase());
     }
 
+    public Bill createBill(Bill bill) throws Exception {
+        var request = billService.createBill(bill);
+
+        var response = request.execute();
+        if (!response.isSuccessful() || response.body() == null) {
+            throw new RequestFailedException("New Bill Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        }
+
+        return response.body().get(Bill.class.getSimpleName().toLowerCase());
+    }
+
     private void setup() {
         final var credentials = Credentials.basic(VindiConfig.getPrivKey(), null);
 
@@ -89,6 +102,7 @@ public final class Vindi {
         customerService = retrofit.create(CustomerService.class);
         paymentProfileService = retrofit.create(PaymentProfileService.class);
         productService = retrofit.create(ProductService.class);
+        billService = retrofit.create(BillService.class);
     }
 
 
