@@ -101,7 +101,8 @@ public final class PaymentProfile {
         this.bankAccount = bankAccount;
     }
 
-    public String getCardExpiration() {
+    public String getCardExpiration()
+    {
         return cardExpiration;
     }
 
