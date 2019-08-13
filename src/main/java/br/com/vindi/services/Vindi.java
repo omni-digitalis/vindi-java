@@ -11,6 +11,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.util.List;
+
 /**
  * The main communication class, it tries to initialize the VindiConfig
  */
@@ -54,6 +56,30 @@ public final class Vindi {
         }
 
         return body.get("payment_profile");
+    }
+
+    public PaymentProfile findPaymentProfileBy(Long paymentProfileId) throws Exception {
+        final var request = paymentProfileService.findPaymentProfileBy(paymentProfileId);
+        final var response = request.execute();
+        final var body = response.body();
+
+        if (!response.isSuccessful() || body == null) {
+            throw new RequestFailedException("Find Payment Profile Request Failed: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        }
+
+        return body.get("payment_profile");
+    }
+
+    public List<PaymentProfile> findPaymentProfileBy(String customerId, String status, String paymentMethod) throws Exception {
+        final var request = paymentProfileService.findPaymentProfileBy(customerId, status, paymentMethod);
+        final var response = request.execute();
+        final var body = response.body();
+
+        if (!response.isSuccessful() || body == null) {
+            throw new RequestFailedException("Find Payment Profile Request Failed: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        }
+
+        return body.get("payment_profiles");
     }
 
     public Product createProduct(Product product) throws Exception {
