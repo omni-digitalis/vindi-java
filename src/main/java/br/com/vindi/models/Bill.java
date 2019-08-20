@@ -1,10 +1,14 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 public final class Bill {
+
+    @Expose(serialize = false, deserialize = false)
+    public static final String MAP_KEY = Bill.class.getSimpleName().toLowerCase();
 
     private String id;
 

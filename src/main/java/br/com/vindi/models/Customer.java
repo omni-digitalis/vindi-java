@@ -1,11 +1,14 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public final class Customer {
+
+    @Expose(serialize = false, deserialize = false)
+    public static final String MAP_KEY = Customer.class.getSimpleName().toLowerCase();
 
     private Long id;
 

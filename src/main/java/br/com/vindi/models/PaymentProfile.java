@@ -1,8 +1,15 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public final class PaymentProfile {
+
+    @Expose(serialize = false, deserialize = false)
+    public static final String MAP_KEY = "payment_profile";
+
+    @Expose(serialize = false, deserialize = false)
+    public static final String MAP_LIST_KEY = "payment_profiles";
 
     private Long id;
 
@@ -101,8 +108,7 @@ public final class PaymentProfile {
         this.bankAccount = bankAccount;
     }
 
-    public String getCardExpiration()
-    {
+    public String getCardExpiration() {
         return cardExpiration;
     }
 
@@ -200,25 +206,12 @@ public final class PaymentProfile {
 
     @Override
     public String toString() {
-        return "PaymentProfile{" +
-                "id=" + id +
-                ", status='" + status + '\'' +
-                ", holderName='" + holderName + '\'' +
-                ", registryCode='" + registryCode + '\'' +
-                ", bankBranch='" + bankBranch + '\'' +
-                ", bankAccount='" + bankAccount + '\'' +
-                ", cardExpiration='" + cardExpiration + '\'' +
-                ", cardNumberFixSix='" + cardNumberFixSix + '\'' +
-                ", cardNumberLastFour='" + cardNumberLastFour + '\'' +
-                ", token='" + token + '\'' +
-                ", gatewayToken='" + gatewayToken + '\'' +
-                ", type='" + type + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", paymentCompany=" + paymentCompany +
-                ", paymentMethod=" + paymentMethod +
-                ", customerId=" + customerId +
-                ", customer=" + customer +
-                '}';
+        return "PaymentProfile{" + "id=" + id + ", status='" + status + '\'' + ", holderName='" + holderName + '\''
+                + ", registryCode='" + registryCode + '\'' + ", bankBranch='" + bankBranch + '\'' + ", bankAccount='"
+                + bankAccount + '\'' + ", cardExpiration='" + cardExpiration + '\'' + ", cardNumberFixSix='"
+                + cardNumberFixSix + '\'' + ", cardNumberLastFour='" + cardNumberLastFour + '\'' + ", token='" + token
+                + '\'' + ", gatewayToken='" + gatewayToken + '\'' + ", type='" + type + '\'' + ", createdAt='"
+                + createdAt + '\'' + ", updatedAt='" + updatedAt + '\'' + ", paymentCompany=" + paymentCompany
+                + ", paymentMethod=" + paymentMethod + ", customerId=" + customerId + ", customer=" + customer + '}';
     }
 }

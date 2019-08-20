@@ -8,9 +8,11 @@ import br.com.vindi.models.PaymentProfile;
 import br.com.vindi.models.Product;
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,10 +20,7 @@ import java.util.List;
  */
 public final class Vindi {
 
-    private CustomerService customerService;
-    private PaymentProfileService paymentProfileService;
-    private ProductService productService;
-    private BillService billService;
+    private Retrofit retrofit;
 
     public Vindi(String privateKey, String publicKey) throws Exception {
         VindiConfig.init(privateKey, publicKey);
@@ -33,105 +32,77 @@ public final class Vindi {
         setup();
     }
 
-
     public Customer createClient(Customer customer) throws Exception {
-        var request = customerService.createClient(customer);
-        var response = request.execute();
-        var body = response.body();
+        var service = getService(CustomerService.class);
+        var response = request(service.createClient(customer));
 
-        if (!response.isSuccessful() || body == null) {
-            throw new RequestFailedException("Create Customer Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
-        }
-
-        return body.get(Customer.class.getSimpleName().toLowerCase());
+        return response.get(Customer.MAP_KEY);
     }
 
     public PaymentProfile createPaymentProfile(PaymentProfile paymentProfile) throws Exception {
-        final var request = paymentProfileService.createPaymentProfile(paymentProfile);
-        final var response = request.execute();
-        final var body = response.body();
+        var service = getService(PaymentProfileService.class);
+        var response = request(service.createPaymentProfile(paymentProfile));
 
-        if (!response.isSuccessful() || body == null) {
-            throw new RequestFailedException("Create Payment Profile Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
-        }
-
-        return body.get("payment_profile");
+        return response.get(PaymentProfile.MAP_KEY);
     }
 
     public PaymentProfile findPaymentProfileBy(Long paymentProfileId) throws Exception {
-        final var request = paymentProfileService.findPaymentProfileBy(paymentProfileId);
-        final var response = request.execute();
-        final var body = response.body();
+        var service = getService(PaymentProfileService.class);
+        var response = request(service.findPaymentProfileBy(paymentProfileId));
 
-        if (!response.isSuccessful() || body == null) {
-            throw new RequestFailedException("Find Payment Profile Request Failed: " + (response.errorBody() != null ? response.errorBody().string() : null));
-        }
-
-        return body.get("payment_profile");
+        return response.get(PaymentProfile.MAP_KEY);
     }
 
-    public List<PaymentProfile> findPaymentProfileBy(String customerId, String status, String paymentMethod) throws Exception {
-        final var request = paymentProfileService.findPaymentProfileBy(customerId, status, paymentMethod);
-        final var response = request.execute();
-        final var body = response.body();
+    public List<PaymentProfile> findPaymentProfileBy(String customerId, String status, String paymentMethod)
+            throws Exception {
+        var service = getService(PaymentProfileService.class);
+        var response = request(service.findPaymentProfileBy(customerId, status, paymentMethod));
 
-        if (!response.isSuccessful() || body == null) {
-            throw new RequestFailedException("Find Payment Profile Request Failed: " + (response.errorBody() != null ? response.errorBody().string() : null));
-        }
-
-        return body.get("payment_profiles");
+        return response.get(PaymentProfile.MAP_LIST_KEY);
     }
 
     public Product createProduct(Product product) throws Exception {
-        final var request = productService.createProduct(product);
-        final var response = request.execute();
-        final var body = response.body();
+        var service = getService(ProductService.class);
+        var response = request(service.createProduct(product));
 
-        if (!response.isSuccessful() || body == null) {
-            throw new RequestFailedException("Create Product Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
-        }
-
-        return body.get(Product.class.getSimpleName().toLowerCase());
+        return response.get(Product.MAP_KEY);
     }
 
     public Bill createBill(Bill bill) throws Exception {
-        var request = billService.createBill(bill);
+        var service = getService(BillService.class);
+        var response = request(service.createBill(bill));
 
-        var response = request.execute();
-        if (!response.isSuccessful() || response.body() == null) {
-            throw new RequestFailedException("New Bill Request: " + (response.errorBody() != null ? response.errorBody().string() : null));
+        return response.get(Bill.MAP_KEY);
+    }
+
+    public <C extends Call<R>, R> R request(C call) throws RequestFailedException, IOException {
+        var response = call.execute();
+        var body = response.body();
+
+        if (!response.isSuccessful() || body == null) {
+            throw new RequestFailedException("Vindi Call Endpoint: " + call.request().url().toString()
+                    + " Request Error: " + (response.errorBody() != null ? response.errorBody().string() : null));
         }
 
-        return response.body().get(Bill.class.getSimpleName().toLowerCase());
+        return body;
+    }
+
+    public <S> S getService(Class<S> service) {
+        return retrofit.create(service);
     }
 
     private void setup() {
         final var credentials = Credentials.basic(VindiConfig.getPrivKey(), null);
 
-        final var okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(chain -> {
-                    final var authRequest = chain.request()
-                            .newBuilder()
-                            .addHeader("Content-Type", "application/json")
-                            .addHeader("Authorization", credentials + ":")
-                            .build();
+        final var okHttpClient = new OkHttpClient.Builder().addInterceptor(chain -> {
+            final var authRequest = chain.request().newBuilder().addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", credentials + ":").build();
 
-                    return chain.proceed(authRequest);
-                })
-                .build();
+            return chain.proceed(authRequest);
+        }).build();
 
-        var retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(VindiConfig.getApiUrl())
-                .build();
-
-        // create all necessary services
-        customerService = retrofit.create(CustomerService.class);
-        paymentProfileService = retrofit.create(PaymentProfileService.class);
-        productService = retrofit.create(ProductService.class);
-        billService = retrofit.create(BillService.class);
+        this.retrofit = new Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(VindiConfig.getApiUrl()).build();
     }
-
 
 }

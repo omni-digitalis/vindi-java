@@ -1,8 +1,12 @@
 package br.com.vindi.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public final class Product {
+
+    @Expose(serialize = false, deserialize = false)
+    public static final String MAP_KEY = Product.class.getSimpleName().toLowerCase();
 
     private Long id;
 

@@ -29,7 +29,6 @@ public class PaymentMethod {
 
     private String type;
 
-
     public String getCode() {
         return code;
     }

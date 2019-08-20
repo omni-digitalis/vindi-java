@@ -1,7 +1,27 @@
 out/
 build/
+bin/
+.settings/
+.gradle/
+.vscode/
+out/
 
 src/main/java/br/com/vindi/MainForTests.java
+
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
 # Compiled class file
 *.class
